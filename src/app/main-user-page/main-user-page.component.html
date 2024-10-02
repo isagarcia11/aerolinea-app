@@ -1,0 +1,153 @@
+<<div class="container mt-5">
+
+    <div class="bg-stone-100 p-5 rounded-md shadow-lg">
+      <!-- Radio buttons for trip type selection -->
+      <div class="mb-4">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="tripType" id="roundTrip" [(ngModel)]="tripType" value="roundTrip">
+          <label class="form-check-label text-rose-400 font-semibold" for="roundTrip">Round Trip</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="tripType" id="oneWay" [(ngModel)]="tripType" value="oneWay">
+          <label class="form-check-label text-rose-400 font-semibold" for="oneWay">One Way</label>
+        </div>
+      </div>
+  
+      <!-- Input fields -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+        <label for="departure" class="font-semibold text-blue-700">Departure:</label>
+         
+        </div>
+        <div class="col-md-6">
+        <label for="destination" class="font-semibold text-blue-700">Destination:</label>
+        </div>
+      </div>
+  
+      <!-- Dates for departure and return -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+            <label for="departureDate" class="font-semibold text-blue-700">Departure Date:</label>
+          <input type="date" class="form-control" [(ngModel)]="departureDate" placeholder="Departure Date">
+        </div>
+  
+        <!-- Show only if it's a round trip -->
+        <div class="col-md-6" *ngIf="tripType === 'roundTrip'">
+            <label for="returnDate" class="font-semibold text-blue-700">Return Date:</label>
+          <input type="date" class="form-control" [(ngModel)]="returnDate" placeholder="Return Date">
+        </div>
+      </div>
+  
+      <!-- Passengers and class selection -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+            <label for="numPassengers" class="font-semibold text-blue-700">Number of Passengers:</label>
+          <select class="form-control" [(ngModel)]="numPassengers">
+            <option value="1">1 Passenger</option>
+            <option value="2">2 Passengers</option>
+            <option value="3">3 Passengers</option>
+            <option value="4">4 Passengers</option>
+            <option value="5">5 Passengers</option>
+            <option value="6">6 Passengers</option>
+            <option value="7">7 Passengers</option>
+            <option value="8">8 Passengers</option>
+            <option value="9">9 Passengers</option>
+            <option value="10">10 Passengers</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+            <label for="travelClass" class="font-semibold text-blue-700">Travel Class:</label>
+          <select class="form-control" [(ngModel)]="travelClass">
+            <option value="economy">Economy</option>
+            <option value="business">Business</option>
+          </select>
+        </div>
+      </div>
+  
+      <!-- Search button -->
+      <div class="text-center">
+        <button class="btn btn-primary bg-rose-400 font-semibold" (click)="searchFlights()">Search Flights</button>
+      </div>
+      <!-- Available flights -->
+  <div *ngIf="flights.length > 0" class="mt-5">
+    <h2 class="text-3xl font-bold text-rose-400">Available Flights</h2>
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Duration</th>
+          <th>Cost per Person</th>
+          <th>Total Cost</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let flight of flights">
+          <td>{{ flight.origin }}</td>
+          <td>{{ flight.destination }}</td>
+          <td>{{ flight.duration }}</td>
+          <td>{{ flight.costPerPerson | currency }}</td>
+          <td>{{ flight.totalCost | currency }}</td>
+          <td>
+            <button (click)="selectFlight(flight)" class="btn btn-primary bg-rose-400">Select</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sección para mostrar detalles del vuelo y formulario de compra -->
+  <div *ngIf="selectedFlight" class="mt-5">
+    <h2 class="text-3xl font-bold text-rose-400">Flight Details</h2>
+    <p><strong>Origin:</strong> {{ selectedFlight.origin }}</p>
+    <p><strong>Destination:</strong> {{ selectedFlight.destination }}</p>
+    <p><strong>Duration:</strong> {{ selectedFlight.duration }}</p>
+    <p><strong>Total Cost:</strong> {{ selectedFlight.totalCost | currency }}</p>
+
+    <h3 class="text-3xl mt-4 text-rose-400 font-bold">Purchase Ticket</h3>
+    <form (ngSubmit)="submitPurchase()" #purchaseForm="ngForm">
+      <div class="mb-3">
+        <label for="idNumber" class="form-label text-blue-700 font-semibold">Identification/Passport</label>
+        <input type="text" id="idNumber" required [(ngModel)]="purchaseData.idNumber" name="idNumber" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="firstName" class="form-label text-blue-700 font-semibold">First Name</label>
+        <input type="text" id="firstName" required [(ngModel)]="purchaseData.firstName" name="firstName" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label text-blue-700 font-semibold">Last Name</label>
+        <input type="text" id="lastName" required [(ngModel)]="purchaseData.lastName" name="lastName" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label text-blue-700 font-semibold">Address</label>
+        <input type="text" id="address" required [(ngModel)]="purchaseData.address" name="address" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label text-blue-700 font-semibold">Email</label>
+        <input type="email" id="email" required [(ngModel)]="purchaseData.email" name="email" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="dob" class="form-label text-blue-700 font-semibold">Date of Birth</label>
+        <input type="date" id="dob" required [(ngModel)]="purchaseData.dob" name="dob" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="residenceAddress" class="form-label text-blue-700 font-semibold">Residence Address</label>
+        <input type="text" id="residenceAddress" required [(ngModel)]="purchaseData.residenceAddress" name="residenceAddress" class="form-control" />
+      </div>
+      <h4 class="mt-3 text-blue-700 font-semibold">Select Seats (if available)</h4>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="seat1" [(ngModel)]="purchaseData.seats.seat1" name="seat1"/>
+        <label class="form-check-label" for="seat1">Seat 1</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="seat2" [(ngModel)]="purchaseData.seats.seat2" name="seat2"/>
+        <label class="form-check-label" for="seat2">Seat 2</label>
+      </div>
+      <button type="submit" class="btn btn-success bg-rose-400 font-semibold">Purchase Ticket</button>
+    </form>
+  </div>
+    </div>
+
+  </div>
+  
