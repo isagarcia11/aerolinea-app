@@ -1,0 +1,44 @@
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(245 245 244);
+    padding: 15px 30px;
+    color: #ffffff;
+  
+    .logo {
+      display: flex;
+      align-items: center;
+      img {
+        width: 90px;
+        height: auto;
+        margin-right: 10px;
+      }
+      span {
+        font-size: 24px;
+        font-weight: bold;
+        color: rgb(29 78 216);
+      }
+    }
+  
+    .menu-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+  
+      li {
+        a {
+          text-decoration: none;
+          color: rgb(251 113 133);
+          font-weight: 500;
+          transition: color 0.3s;
+          
+          &:hover {
+            color: rgb(225 29 72);
+          }
+        }
+      }
+    }
+  }
+  

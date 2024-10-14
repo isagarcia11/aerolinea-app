@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-title>Información de Tripulantes</mat-card-title>
+  
+    <form [formGroup]="crewForm">
+      <mat-form-field>
+        <mat-label>Nombre del tripulante</mat-label>
+        <input matInput formControlName="crewName" placeholder="Ingresa el nombre completo" />
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Cargo</mat-label>
+        <input matInput formControlName="crewRole" placeholder="Ingresa el cargo" />
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Asignar trayecto</mat-label>
+        <mat-select formControlName="assignedFlight">
+          
+        </mat-select>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" (click)="addCrewMember()">Agregar Tripulante</button>
+    </form>
+  </mat-card>

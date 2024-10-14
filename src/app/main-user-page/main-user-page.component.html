@@ -1,4 +1,4 @@
-<<div class="container mt-5">
+<div class="container mt-5">
 
     <div class="bg-stone-100 p-5 rounded-md shadow-lg">
       <!-- Radio buttons for trip type selection -->
@@ -17,10 +17,12 @@
       <div class="row mb-4">
         <div class="col-md-6">
         <label for="departure" class="font-semibold text-blue-700">Departure:</label>
+        <input type="text" id="departure" [(ngModel)]="departure" name="departure" class="form-control">
          
         </div>
         <div class="col-md-6">
         <label for="destination" class="font-semibold text-blue-700">Destination:</label>
+        <input type="text" id="destination" [(ngModel)]="destination" name="destination" class="form-control">
         </div>
       </div>
   

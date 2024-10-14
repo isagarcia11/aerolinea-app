@@ -1,0 +1,83 @@
+<div class="container">
+    <form [formGroup]="baggageForm" (ngSubmit)="onSubmit()">
+      <!-- Customer Data -->
+      <mat-card>
+        <mat-card-title>Customer Data</mat-card-title>
+        
+        <mat-form-field>
+          <mat-label>Passenger name</mat-label>
+          
+          <input matInput formControlName="passengerName" required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Ticket Class</mat-label>
+          <mat-select formControlName="ticketClass">
+            <mat-option value="economy">Economy</mat-option>
+            <mat-option value="business">Business</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Travel Type</mat-label>
+          <mat-select formControlName="travelType">
+            <mat-option value="national">National</mat-option>
+            <mat-option value="international">International</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card>
+  
+      <!-- Allow Baggage -->
+      <mat-card>
+        <mat-card-title>Allow Baggage</mat-card-title>
+        <div>
+          <p class="custom-text"><strong>Allow pieces:</strong> {{ allowedBaggage.pieces }} </p>
+          <p class="custom-text"><strong>Maximum weight per piece:</strong> {{ allowedBaggage.maxWeight }} kg</p>
+          <p class="custom-text"><strong>Maximum dimensions:</strong> 170 cm</p>
+        </div>
+      </mat-card>
+  
+      <!--Checked Baggage -->
+      <mat-card>
+        <mat-card-title>Checked Baggage</mat-card-title>
+        <div formArrayName="baggage">
+          <div *ngFor="let item of baggage.controls; let i = index" [formGroupName]="i">
+            <mat-form-field>
+              <mat-label>Piece weight (kg)</mat-label>
+              <input matInput type="number" formControlName="weight" />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Dimensions (cm)</mat-label>
+              <input matInput formControlName="dimensions" />
+            </mat-form-field>
+          </div>
+        </div>
+        <button mat-raised-button class="custom-button" (click)="addBaggage()">Add Piece</button>
+      </mat-card>
+  
+      <!-- Pet -->
+      <mat-card>
+        <mat-card-title>Pet</mat-card-title>
+        <mat-slide-toggle formControlName="hasPet">Are you traveling with a pet?</mat-slide-toggle>
+        <div *ngIf="baggageForm.get('hasPet')?.value">
+          <mat-form-field>
+            <mat-label>Pet weight (kg)</mat-label>
+            <input matInput type="number" formControlName="petWeight" />
+          </mat-form-field>
+        </div>
+      </mat-card>
+  
+      <!-- Total to pay -->
+      <mat-card>
+        <mat-card-title>Cost Summary</mat-card-title>
+        <p class="custom-text">Total for excess baggage: {{ excessCost | currency:'USD' }}</p>
+        <p class="custom-text">Total per pet: {{ petCost | currency:'USD' }}</p>
+        <p class="custom-text">Total to pay: {{ totalCost | currency:'USD' }}</p>
+      </mat-card>
+      <div class="text-center">
+      <button mat-raised-button class="custom-button" type="submit">Register Luggage</button>
+    </div>
+    </form>
+   
+
+
+  </div>
+  

@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { EmployeeMainPageComponent } from './employee-main-page.component';
+
+describe('EmployeeMainPageComponent', () => {
+  let component: EmployeeMainPageComponent;
+  let fixture: ComponentFixture<EmployeeMainPageComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [EmployeeMainPageComponent]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(EmployeeMainPageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

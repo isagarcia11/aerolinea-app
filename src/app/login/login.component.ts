@@ -1,30 +1,28 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
-  constructor() {}
+  username: string = '';
+  password: string = '';
+  errorMessage: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    
-    // Solo para el ejemplo
-    const username = (document.getElementById('username') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
-
-    if (username && password) {
-      console.log('Username:', username);
-      console.log('Password:', password);
-      alert('Login successful!'); 
-    } else {
-      alert('Please fill in all fields.');
-    }
+    this.authService.login(this.username, this.password).subscribe(
+      response => {
+        // Redireccionar al dashboard o página deseada tras el login exitoso
+        this.router.navigate(['/main-user-page']);
+      },
+      error => {
+        // Manejar el error, mostrar un mensaje, etc.
+        this.errorMessage = 'Incorrect credentials. Please try again..';
+      }
+    );
   }
-
-  forgotPassword() {
-    alert('Password recovery process will be initiated.');
-  }
-
 }
