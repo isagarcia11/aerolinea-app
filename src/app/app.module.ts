@@ -21,6 +21,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { EmployeeMainPageComponent } from './employee-main-page/employee-main-page.component';
 import { CrewAssignComponent } from './crew-assign/crew-assign.component';
 import { ClientTripComponent } from './client-trip/client-trip.component';
+import { ParkingLotComponent } from './parking-lot/parking-lot.component';
+import { CarQueueComponent } from './car-queue/car-queue.component';
 
 
 
@@ -34,7 +36,9 @@ import { ClientTripComponent } from './client-trip/client-trip.component';
     BaggageCheckinComponent,
     EmployeeMainPageComponent,
     CrewAssignComponent,
-    ClientTripComponent 
+    ClientTripComponent,
+    ParkingLotComponent,
+    CarQueueComponent 
    
   ],
   imports: [

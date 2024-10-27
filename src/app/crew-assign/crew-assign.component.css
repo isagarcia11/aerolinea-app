@@ -1,0 +1,101 @@
+
+.crew-assignment-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: rgb(245 245 244);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .heading {
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: rgb(251 113 133);
+    margin-bottom: 15px;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: rgb(251 113 133);
+  }
+  
+  .select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  .subheading {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: rgb(251 113 133);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+  }
+  
+  .crew-member {
+    margin-top: 15px;
+  }
+  
+  .role-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: rgb(251 113 133);
+  }
+  
+  .crew-info {
+    margin: 5px 0;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: rgb(251 113 133);
+  }
+  
+  .crew-name {
+    font-weight: bold;
+    color: rgb(29 78 216);
+  }
+  
+  .crew-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .crew-list li {
+    padding: 5px 0;
+    font-size: 1em;
+  }
+  
+  .attendant-select {
+    margin-top: 10px;
+  }
+  .button-save {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(29 78 216); /* Verde */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-save:hover {
+    background-color: rgb(21, 59, 162); /* Verde más oscuro al pasar el mouse */
+}
+
+
+
+
+
+  

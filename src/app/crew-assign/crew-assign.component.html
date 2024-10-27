@@ -1,24 +1,70 @@
-<mat-card>
-    <mat-card-title>Información de Tripulantes</mat-card-title>
-  
-    <form [formGroup]="crewForm">
-      <mat-form-field>
-        <mat-label>Nombre del tripulante</mat-label>
-        <input matInput formControlName="crewName" placeholder="Ingresa el nombre completo" />
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Cargo</mat-label>
-        <input matInput formControlName="crewRole" placeholder="Ingresa el cargo" />
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Asignar trayecto</mat-label>
-        <mat-select formControlName="assignedFlight">
-          
-        </mat-select>
-      </mat-form-field>
-  
-      <button mat-raised-button color="primary" (click)="addCrewMember()">Agregar Tripulante</button>
-    </form>
-  </mat-card>
+<div class="crew-assignment-container">
+  <h2 class="heading">Crew Assignment</h2>
+
+  <div class="flight-number">
+    <label for="flightNumber" class="label">Flight Number:</label>
+    <input id="flightNumber" type="text" class="input" [(ngModel)]="flightNumber">
+  </div>
+
+  <!-- Aircraft Selection -->
+  <div class="aircraft-selection">
+    <label for="aircraft" class="label">Choose an Aircraft:</label>
+    <select id="aircraft" class="select" (change)="onAircraftSelection($event)">
+      <option value="">Select an Option</option>
+      <option value="A320">Airbus A320</option>
+      <option value="A330">Airbus A330</option>
+      <option value="B787">Boeing 787</option>
+    </select>
+  </div>
+
+  <!-- Crew Requirements -->
+  <div *ngIf="selectedAircraft" class="crew-requirements">
+    <h3 class="subheading">Crew Required for {{ selectedAircraft }}</h3>
+
+    <!-- Pilot -->
+    <div class="crew-member">
+      <h4 class="role-title">Pilot</h4>
+      <div *ngIf="requiredCrew.commander; else pilotSelection" class="crew-info">
+        <span class="crew-name">{{ requiredCrew.commander.name }}</span>
+      </div>
+      <ng-template #pilotSelection>
+        <select [(ngModel)]="selectedCommander" class="select" (ngModelChange)="assignCrewMember('commander', selectedCommander)">
+          <option value="">Select Pilot</option>
+          <option *ngFor="let crew of availableCrewMembers()" [value]="crew.id">{{ crew.name }}</option>
+        </select>
+      </ng-template>
+    </div>
+
+    <!-- Co-Pilot -->
+    <div class="crew-member">
+      <h4 class="role-title">Co-Pilot</h4>
+      <div *ngIf="requiredCrew.copilot; else coPilotSelection" class="crew-info">
+        <span class="crew-name">{{ requiredCrew.copilot.name }}</span>
+      </div>
+      <ng-template #coPilotSelection>
+        <select [(ngModel)]="selectedCoPilot" class="select" (ngModelChange)="assignCrewMember('copilot', selectedCoPilot)">
+          <option value="">Select Co-Pilot</option>
+          <option *ngFor="let crew of availableCrewMembers()" [value]="crew.id">{{ crew.name }}</option>
+        </select>
+      </ng-template>
+    </div>
+
+    <!-- Flight Attendants -->
+    <div class="crew-member">
+      <h4 class="role-title">Flight Attendants</h4>
+      <div *ngFor="let attendant of requiredCrew.attendants; let i = index">
+        <div *ngIf="attendant; else attendantSelection">
+          <span class="crew-name">{{ attendant.name }}</span>
+        </div>
+        <ng-template #attendantSelection>
+          <select [(ngModel)]="selectedAttendants[i]" class="select" (ngModelChange)="assignCrewMember('attendant', selectedAttendants[i], i)">
+            <option value="">Select Flight Attendant</option>
+            <option *ngFor="let crew of availableCrewMembers()" [value]="crew.id">{{ crew.name }}</option>
+          </select>
+        </ng-template>
+      </div>
+    </div>
+  <div class="save-button">
+    <button class="button-save" (click)="saveAssignment()">Save Assignment</button>
+  </div>
+</div>
