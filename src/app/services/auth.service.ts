@@ -16,14 +16,25 @@ private apiUrl = 'https://api.example.com/login';
 
     return this.http.post<any>(this.apiUrl, body, { headers }).pipe(
       map(response => {
-        // Guardar el token en localStorage o sessionStorage si la respuesta contiene un token
-        if (response && response.token) {
+        // Guardar el token y el rol en localStorage si la respuesta contiene ambos
+        if (response && response.token && response.role) {
           localStorage.setItem('authToken', response.token);
+          localStorage.setItem('userRole', response.role); // Guardar el rol
         }
         return response;
       })
     );
   }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('authToken');
+  }
+
+  
+  getUserRole(): string | null {
+    return localStorage.getItem('userRole');
+  }
+
 
   register(userData: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -31,11 +42,10 @@ private apiUrl = 'https://api.example.com/login';
   }
 
   logout(): void {
-    // Elimina el token al cerrar sesión
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userRole');
   }
 
-  // Método para obtener el token si es necesario
   getToken(): string | null {
     return localStorage.getItem('token');
   }

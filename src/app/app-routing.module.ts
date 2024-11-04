@@ -8,19 +8,21 @@ import { EmployeeMainPageComponent } from './employee-main-page/employee-main-pa
 import { BaggageCheckinComponent } from './baggage-checkin/baggage-checkin.component'; 
 import { CrewAssignComponent } from './crew-assign/crew-assign.component';
 import { ClientTripComponent } from './client-trip/client-trip.component';
+import { CarQueueComponent } from './car-queue/car-queue.component';
 
 
 
 
 const routes: Routes = [
+  { path: '', component: LoginComponent },
   { path: '', component: EmployeeMainPageComponent }, 
   { path: 'baggage-checkin', component: BaggageCheckinComponent },
-  { path: '', component: LoginComponent },
   { path: 'password-forgot', component: PasswordForgotComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'main-user-page', component: MainUserPageComponent },
   { path: 'crew-assign', component: CrewAssignComponent },
   { path:'client-trip',component:ClientTripComponent },
+  {path:'car-queue', component: CarQueueComponent}
 
 ];
 

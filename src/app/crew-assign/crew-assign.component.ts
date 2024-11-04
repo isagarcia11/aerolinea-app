@@ -22,8 +22,8 @@ export class CrewAssignComponent implements OnInit {
     requiredCrew: RequiredCrew = {
       commander: null,
       copilot: null,
-      attendants: [] // Inicializar como un array vacío
-    };
+      attendants: [] 
+    }
   
     constructor(private crewMemberService: CrewMemberService) { this.loadCrewMembers();}
   

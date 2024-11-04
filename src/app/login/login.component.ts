@@ -12,16 +12,20 @@ export class LoginComponent {
   errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
-
   onSubmit() {
     this.authService.login(this.username, this.password).subscribe(
       response => {
-        // Redireccionar al dashboard o página deseada tras el login exitoso
-        this.router.navigate(['/main-user-page']);
+        // Verificar el rol del usuario y redirigir en consecuencia
+        const userRole = this.authService.getUserRole();
+        if (userRole === 'admin') {
+          this.router.navigate(['/employee-main-page']); // Redirigir a la página de administrador
+        } else {
+          this.router.navigate(['/main-user-page']); // Redirigir a la página estándar
+        }
       },
       error => {
-        // Manejar el error, mostrar un mensaje, etc.
-        this.errorMessage = 'Incorrect credentials. Please try again..';
+        
+        this.errorMessage = 'Incorrect credentials. Please try again.';
       }
     );
   }

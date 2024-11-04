@@ -1,1 +1,34 @@
-<p>car-queue works!</p>
+<div class="parking-line">
+    <h2>Parking Line of Loading Carts</h2>
+    
+    <!-- Table displaying the list of carts -->
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Load (kg)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cart of carts">
+                <td>{{ cart.id }}</td>
+                <td>{{ cart.load }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- Actions to control the parking line -->
+    <div class="actions">
+        <button class="action-btn" (click)="onDeparture()">Departure (Remove front cart)</button>
+
+        <div class="input-group">
+            <input #cartIdToRemove type="text" placeholder="ID of cart to remove">
+            <button class="action-btn" (click)="onRemove(cartIdToRemove.value)">Remove Cart</button>
+        </div>
+
+        <div class="input-group">
+            <input #newCartId type="text" placeholder="New cart ID">
+            <button class="action-btn" (click)="addArrival(newCartId.value)">Arrival (Add new cart)</button>
+        </div>
+    </div>
+</div>
