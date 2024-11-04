@@ -7,28 +7,27 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/api/auth'; //URL del back
-
+private apiUrl = 'https://api.example.com/login';
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { username, password };
 
-    return this.http.post(`${this.baseUrl}/login`, body, { headers })
-      .pipe(
-        map((response: any) => {
-          // Guardar el token JWT en el localStorage si el login es exitoso
-          if (response && response.token) {
-            localStorage.setItem('token', response.token);
-          }
-          return response;
-        })
-      );
+    return this.http.post<any>(this.apiUrl, body, { headers }).pipe(
+      map(response => {
+        // Guardar el token en localStorage o sessionStorage si la respuesta contiene un token
+        if (response && response.token) {
+          localStorage.setItem('authToken', response.token);
+        }
+        return response;
+      })
+    );
   }
+
   register(userData: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${this.baseUrl}/register`, userData, { headers });
+    return this.http.post(`${this.apiUrl}/register`, userData, { headers });
   }
 
   logout(): void {

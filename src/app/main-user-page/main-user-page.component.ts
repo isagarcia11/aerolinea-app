@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Init } from 'v8';
+import { Component, OnInit } from '@angular/core';
+import { FlightService } from '../services/flight.service';
 
 @Component({
   selector: 'app-main-user-page',
@@ -15,8 +15,8 @@ export class MainUserPageComponent{
   numPassengers: number = 1;        
   travelClass: string = 'economy';  
   flights: any[] = [];              
-  selectedFlight: any;              // Variable para almacenar el vuelo seleccionado
-  purchaseData: any = {             // Objeto para almacenar datos de compra
+  selectedFlight: any;              
+  purchaseData: any = {            
     idNumber: '',
     firstName: '',
     lastName: '',
@@ -26,18 +26,28 @@ export class MainUserPageComponent{
     residenceAddress: '',
     seats: { seat1: false, seat2: false } // Modificar según disponibilidad real
   };
+  constructor(private flightService: FlightService) {}
 
   // Método para buscar vuelos
   searchFlights() {
-    
+    this.flightService.searchFlights(this.departure, this.destination, this.departureDate, this.returnDate, this.numPassengers, this.travelClass)
+      .subscribe(
+        (flights) => this.flights = flights,
+        (error) => console.error('Error al buscar vuelos', error)
+      );
   }
 
   // Método para seleccionar un vuelo
   selectFlight(flight: any) {
-    
+    this.selectedFlight = flight;
   }
 
   // Método para procesar la compra
   submitPurchase() {
+    this.flightService.submitPurchase(this.purchaseData)
+      .subscribe(
+        (response) => console.log('Compra realizada con éxito', response),
+        (error) => console.error('Error en el procesamiento de la compra', error)
+      );
   }
 }

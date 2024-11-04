@@ -17,6 +17,7 @@ export class CrewMemberService {
     { id: 7, name: 'Ethan Green', address: '159 Cherry St', email: 'ethan@example.com', dateOfBirth: '1987-07-07', education: 'Bachelor\'s in Hospitality' },
     { id: 8, name: 'Fiona Gray', address: '753 Walnut St', email: 'fiona@example.com', dateOfBirth: '1986-08-08', education: 'Bachelor\'s in Tourism' },
     { id: 9, name: 'George Blue', address: '951 Fir St', email: 'george@example.com', dateOfBirth: '1989-09-09', education: 'Bachelor\'s in Aeronautics' }
+    
     // Agrega más miembros de la tripulación según sea necesario
   ];
     private crewMembersSubject = new BehaviorSubject<CrewMember[]>(this.allCrewMembers);

@@ -1,60 +1,49 @@
-<!-- Formulario para seleccionar modalidad de viaje -->
-<mat-card>
-    <mat-card-title>Selecciona tu modalidad de viaje</mat-card-title>
-  
-    <form [formGroup]="tripForm">
-      <mat-form-field>
-        <mat-label>Modalidad del viaje</mat-label>
-        <mat-select formControlName="tripType">
-          <mat-option value="oneWay">Solo ida</mat-option>
-          <mat-option value="roundTrip">Ida y vuelta</mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Ciudad de origen</mat-label>
-        <mat-select formControlName="originCity">
-          <mat-option *ngFor="let city of cities" [value]="city">{{ city }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Ciudad de destino</mat-label>
-        <mat-select formControlName="destinationCity">
-          <mat-option *ngFor="let city of cities" [value]="city">{{ city }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Tipo de servicio</mat-label>
-        <mat-select formControlName="serviceType">
-          <mat-option value="economy">Económico</mat-option>
-          <mat-option value="business">Business</mat-option>
-          <mat-option value="firstClass">Primera clase</mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Fecha de inicio</mat-label>
-        <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" placeholder="Selecciona una fecha" />
-        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #startDatePicker></mat-datepicker>
-      </mat-form-field>
-  
-      <mat-form-field *ngIf="tripForm.get('tripType')?.value === 'roundTrip'">
-        <mat-label>Fecha de regreso</mat-label>
-        <input matInput [matDatepicker]="returnDatePicker" formControlName="returnDate" placeholder="Selecciona una fecha" />
-        <mat-datepicker-toggle matSuffix [for]="returnDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #returnDatePicker></mat-datepicker>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Costo del viaje por persona</mat-label>
-        <input matInput type="number" formControlName="tripCost" placeholder="Costo en USD" />
-      </mat-form-field>
-  
-      <button mat-raised-button color="primary" (click)="bookTrip()">Reservar Viaje</button>
-    </form>
-  </mat-card>
-  
-  
+<div class="container mt-5 p-4 border rounded bg-stone-100">
+  <h2 class="text-center mb-4">Customer´s Trip</h2>
+  <form (ngSubmit)="bookTrip()">
+    <div class="form-group mb-3">
+      <label for="travelType">Travel Type</label>
+      <select [(ngModel)]="trip.travelType" name="travelType" class="form-select" required>
+        <option *ngFor="let tipo of travelTypes" [value]="tipo">{{ tipo }}</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="originCity">Origin City</label>
+      <select [(ngModel)]="trip.originCity" name="ciudadOrigen" class="form-select" required>
+        <option *ngFor="let ciudad of cities" [value]="ciudad">{{ ciudad }}</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="destinationCity">Destination City</label>
+      <select [(ngModel)]="trip.destinationCity" name="destinationCity" class="form-select" required>
+        <option *ngFor="let ciudad of cities" [value]="ciudad">{{ ciudad }}</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="startDate">Start Date</label>
+      <input type="date" [(ngModel)]="trip.startDate" name="startDate" class="form-control" required>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="returnDate">Return Date</label>
+      <input type="date" [(ngModel)]="trip.returnDate" name="returnDate" [disabled]="trip.travelType === 'One Way'" class="form-control" required>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="serviceType">Service Type</label>
+      <select [(ngModel)]="trip.serviceType" name="serviceType" class="form-select" required>
+        <option *ngFor="let servicio of serviceTypes" [value]="servicio">{{ servicio }}</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="costPerPerson">Cost Per Person </label>
+      <input type="number" [(ngModel)]="trip.costPerPerson" name="costPerPerson" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Book Trip</button>
+  </form>
+</div>
