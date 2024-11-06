@@ -7,14 +7,15 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-private apiUrl = 'https://api.example.com/login';
+private apiUrl = 'http://localhost:8080/clientes';
+
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { username, password };
 
-    return this.http.post<any>(this.apiUrl, body, { headers }).pipe(
+    return this.http.post<any>(`${this.apiUrl}/login`, body, { headers }).pipe(
       map(response => {
         // Guardar el token y el rol en localStorage si la respuesta contiene ambos
         if (response && response.token && response.role) {

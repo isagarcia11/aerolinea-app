@@ -1,25 +1,46 @@
 import { Injectable } from '@angular/core';
+import { FlightService } from '../services/flight.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientTripService {
-  travelTypes: string[] = ['One Way', 'Round Trip'];
-  cities: string[] = ['CDMX', 'Buenos Aires', 'Monterrey', 'Cancun','Los Angeles','Bogota','Panama'];
-  serviceTypes: string[] = ['Economic', 'Business'];
+  
+  travelTypes: string[] = [];
+  cities: string[] = [];
+  serviceTypes: string[] = [];
 
-  constructor() {}
+  constructor(private flightService:FlightService) {
 
-  getTravelTypes(): string[] {
-    return this.travelTypes;
+    this.flightService.getCities().subscribe({
+      next: (data) => {
+        this.cities = data;
+      },
+      error: (data) => {
+        console.log(data);
+      }
+    });
+
+    this.flightService.getTravelTypes().subscribe({
+      next: (data) => {
+        this.travelTypes = data;
+      }, 
+      error: (data) => {
+        console.log(data);
+      }
+    });
+
+    this.flightService.getServiceTypes().subscribe({
+      next: (data) => {
+        this.serviceTypes = data;
+      }, 
+      error: (data) => {
+        console.log(data);
+      }
+    });
+
   }
 
-  getCities(): string[] {
-    return this.cities;
-  }
-
-  getServiceTypes(): string[] {
-    return this.serviceTypes;
-  }
+  
  
 }

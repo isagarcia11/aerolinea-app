@@ -8,6 +8,6 @@ export class StackService {
   private stack: Car[] = [];
 
   push(car: Car) { /* implementación */ }
-  pop(): Car | null { /* implementación */ }
+  //pop(): Car | null { /* implementación */ }
   clear() { this.stack = []; }
 }

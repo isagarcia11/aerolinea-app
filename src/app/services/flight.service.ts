@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FlightService {
-  private apiUrl = 'https://api.example.com/flights';
+  private apiUrl = 'http://localhost:8080/?';
 
   constructor(private http: HttpClient) {}
 
@@ -28,6 +28,20 @@ export class FlightService {
   selectFlight(flightId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/flight/${flightId}`);
   }
+
+  getCities(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/cities`);
+  }
+
+  getTravelTypes(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/traveltypes`);
+  }
+
+  getServiceTypes(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/serviceTypes`);
+  }
+
+
 
   
   submitPurchase(purchaseData: any): Observable<any> {

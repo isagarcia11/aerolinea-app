@@ -31,8 +31,8 @@ export class RegisterComponent {
   onSubmit() {
     if (this.signupForm.valid) {
       const userData = {
-        firstName: this.signupForm.get('firstName')?.value,
-        lastName: this.signupForm.get('lastName')?.value,
+        nombre: this.signupForm.get('firstName')?.value,
+        apellido: this.signupForm.get('lastName')?.value,
         email: this.signupForm.get('email')?.value,
         password: this.signupForm.get('password')?.value
       };
