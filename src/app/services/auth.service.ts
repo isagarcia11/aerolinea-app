@@ -1,53 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { LoginDTO } from '../login-dto';
+import { MensajeDTO } from '../mensaje-dto';
+import { CrearUsuarioDTO } from '../crear-usuario-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-private apiUrl = 'http://localhost:8080/clientes';
+private apiUrl = 'http://localhost:8080/api/usuarios';
 
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = { username, password };
+  public login (loginDTO: LoginDTO): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.apiUrl}/iniciar-sesion`, loginDTO);
+   }
+   
+   public crearUsuario(cuentaDTO: CrearUsuarioDTO): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.apiUrl}/crear-cuenta`, cuentaDTO);
+   }
 
-    return this.http.post<any>(`${this.apiUrl}/login`, body, { headers }).pipe(
-      map(response => {
-        // Guardar el token y el rol en localStorage si la respuesta contiene ambos
-        if (response && response.token && response.role) {
-          localStorage.setItem('authToken', response.token);
-          localStorage.setItem('userRole', response.role); // Guardar el rol
-        }
-        return response;
-      })
-    );
-  }
-
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('authToken');
-  }
-
-  
-  getUserRole(): string | null {
-    return localStorage.getItem('userRole');
-  }
-
-
-  register(userData: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${this.apiUrl}/register`, userData, { headers });
-  }
-
-  logout(): void {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userRole');
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
 }

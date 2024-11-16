@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { LoginDTO } from '../login-dto';
+import { TokenService } from '../services/token.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,23 +13,27 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
+  loginForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) {}
-  onSubmit() {
-    this.authService.login(this.username, this.password).subscribe(
-      response => {
-        // Verificar el rol del usuario y redirigir en consecuencia
-        const userRole = this.authService.getUserRole();
-        if (userRole === 'admin') {
-          this.router.navigate(['/employee-main-page']); // Redirigir a la página de administrador
-        } else {
-          this.router.navigate(['/main-user-page']); // Redirigir a la página estándar
-        }
+  constructor(private authService: AuthService, private tokenService: TokenService) {}
+  
+  public login() {
+
+    const loginDTO = this.loginForm.value as LoginDTO;
+   
+   
+    this.authService.login(loginDTO).subscribe({
+      next: (data) => {
+        this.tokenService.login(data.respuesta.token);
       },
-      error => {
-        
-        this.errorMessage = 'Incorrect credentials. Please try again.';
-      }
-    );
-  }
+      error: (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.error.respuesta
+      });
+    },
+  });
+}
+
 }
