@@ -16,8 +16,8 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     if (this.fb) {
       this.signupForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      name: ['', Validators.required],
+      lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
@@ -46,10 +46,10 @@ export class RegisterComponent {
         if (data?.respuesta) {
           // Si se crea el usuario correctamente, muestra un mensaje de éxito
           Swal.fire({
-            title: 'Cuenta creada con éxito',
-            text: 'Tu cuenta ha sido creada correctamente.',
+            title: 'Account successfully created',
+            text: 'Your account has been successfully created',
             icon: 'success',
-            confirmButtonText: 'Ir al Login'
+            confirmButtonText: 'Go to login'
           }).then(() => {
             // Redirige al usuario al login después de un registro exitoso
             this.router.navigate(['/login']);
@@ -58,7 +58,7 @@ export class RegisterComponent {
       },
       error: (error) => {
         // Manejo de error: muestra el mensaje que viene del backend
-        let errorMessage = 'Error desconocido. Por favor, intente más tarde.';
+        let errorMessage = 'Unknown error. Please try again later';
   
         // Si el backend devuelve un mensaje de error en 'respuesta', mostrarlo
         if (error?.error?.respuesta) {
@@ -70,7 +70,7 @@ export class RegisterComponent {
           title: 'Error',
           text: errorMessage,
           icon: 'error',
-          confirmButtonText: 'Cerrar'
+          confirmButtonText: 'Close'
         });
       }
     });
