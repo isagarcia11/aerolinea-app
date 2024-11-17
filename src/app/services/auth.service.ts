@@ -14,11 +14,11 @@ private apiUrl = 'http://localhost:8080/api/usuarios';
   constructor(private http: HttpClient) { }
 
   public login (loginDTO: LoginDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.apiUrl}/iniciar-sesion`, loginDTO);
+    return this.http.post<MensajeDTO>(`${this.apiUrl}/login`, loginDTO);
    }
    
    public crearUsuario(cuentaDTO: CrearUsuarioDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.apiUrl}/crear-cuenta`, cuentaDTO);
+    return this.http.post<MensajeDTO>(`${this.apiUrl}/crear-usuario`, cuentaDTO);
    }
 
 }

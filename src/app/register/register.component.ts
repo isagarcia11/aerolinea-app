@@ -31,30 +31,50 @@ export class RegisterComponent {
   }
 
   public crearUsuario() {
+    // Verifica si el formulario es válido antes de intentar crear el usuario
+    if (this.signupForm.invalid) {
+      return; // Si el formulario no es válido, no hacemos nada
+    }
+  
+    // Obtener los datos del formulario como un objeto DTO
     const crearUsuario = this.signupForm.value as CrearUsuarioDTO;
-   
-   
+  
+    // Llamar al servicio para crear el usuario
     this.authService.crearUsuario(crearUsuario).subscribe({
       next: (data) => {
-        Swal.fire({
-          title: 'Account has been created',
-          text: 'The account has been created correctly',
-          icon: 'success',
-          confirmButtonText: 'Sign Up'
-        })
+        // Verificar si la respuesta contiene el campo 'respuesta'
+        if (data?.respuesta) {
+          // Si se crea el usuario correctamente, muestra un mensaje de éxito
+          Swal.fire({
+            title: 'Cuenta creada con éxito',
+            text: 'Tu cuenta ha sido creada correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Ir al Login'
+          }).then(() => {
+            // Redirige al usuario al login después de un registro exitoso
+            this.router.navigate(['/login']);
+          });
+        }
       },
       error: (error) => {
+        // Manejo de error: muestra el mensaje que viene del backend
+        let errorMessage = 'Error desconocido. Por favor, intente más tarde.';
+  
+        // Si el backend devuelve un mensaje de error en 'respuesta', mostrarlo
+        if (error?.error?.respuesta) {
+          errorMessage = error.error.respuesta;
+        }
+  
+        // Mostrar el mensaje de error usando Swal
         Swal.fire({
           title: 'Error',
-          text: error.error.respuesta,
+          text: errorMessage,
           icon: 'error',
-          confirmButtonText: 'Sign Up'
-        })
+          confirmButtonText: 'Cerrar'
+        });
       }
     });
-   
-   
-   }
+  }
    
    
 }

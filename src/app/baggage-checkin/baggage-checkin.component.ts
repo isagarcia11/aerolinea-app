@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
+import { BaggageCheckInService } from '../services/baggage-check-in.service';
 
 @Component({
   selector: 'app-baggage-checkin',
@@ -18,14 +19,16 @@ export class BaggageCheckinComponent implements OnInit {
  
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private baggageService: BaggageCheckInService) {
     this.baggageForm = this.fb.group({
       passengerName: ['', Validators.required],
       ticketClass: ['', Validators.required],
       travelType: ['', Validators.required],
       baggage: this.fb.array([]),
       hasPet: [false],
-      petWeight: [null]
+      petWeight: [null],
+      weight: [null, Validators.required],
+      dimensions: [null, Validators.required]
     });
 
   }
@@ -45,11 +48,13 @@ export class BaggageCheckinComponent implements OnInit {
   }
 
   addBaggage() {
-    const baggageItem = this.fb.group({
-      weight: [null, Validators.required],
-      dimensions: [null, Validators.required]
+    const baggageItem = this.baggageForm.value;
+    this.baggageService.addBaggage(baggageItem).subscribe(response => {
+      console.log('Baggage added:', response);
+      // Lógica adicional después de agregar el equipaje, como resetear el formulario o mostrar mensaje de éxito
+    }, error => {
+      console.error('ERROR', error);
     });
-    this.baggage.push(baggageItem);
   }
 
   updateBaggagePolicy() {
