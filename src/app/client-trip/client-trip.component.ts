@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { ClientTripService } from '../services/client-trip.service';
 import { ClientTrip } from '../model/client-trip';
+import { FlightService } from '../services/flight.service';
 @Component({
   selector: 'app-client-trip',
   templateUrl: './client-trip.component.html',
@@ -14,7 +15,7 @@ export class ClientTripComponent implements OnInit {
   cities: string[];
   serviceTypes: string[];
 
-  constructor(private tripService: ClientTripService) {
+  constructor(private tripService: ClientTripService, private flightService: FlightService) {
     this.trip ={
       travelType: '',
       originCity:'',

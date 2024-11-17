@@ -41,6 +41,17 @@ export class ClientTripService {
 
   }
 
+  getTravelTypes(): string[] {
+    return this.travelTypes;
+  }
+
+  getCities(): string[] {
+    return this.cities;
+  }
+
+  getServiceTypes(): string[] {
+    return this.serviceTypes;
+  }
   
  
 }
