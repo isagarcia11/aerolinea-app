@@ -1,5 +1,5 @@
 export interface CrearUsuarioDTO {
-    name: String,
+    name1: String,
     lastname: String,
     email: String,
     password: String
